@@ -48,7 +48,7 @@ const HomePage = (props) => {
                                 {
                                     show && (
                                         <Fade right cascade>
-                                            <img src="./images/CubesShufflingGIF.gif" className="mt-[0px] max-w-[720px] max-h-[680px] w-[50%]" alt="" />
+                                            <img src="./images/commune.gif" className="mt-[0px] max-w-[720px] max-h-[680px] w-[50%]" alt="" />
                                         </Fade>
                                     )
                                 }
