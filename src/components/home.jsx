@@ -1,21 +1,16 @@
 import React from 'react'
-import { InView } from "react-intersection-observer";
 import { Zoom, Fade, Bounce } from 'react-reveal';
-import ModelPage from './modelPage';
+import { useNavigate } from "react-router-dom";
 const HomePage = (props) => {
-
-    const [show, setShow] = React.useState(false);
-    const [isModelPage, setIsModelPage] = React.useState(false);
+    const navigate = useNavigate();
     const OpenModelPage = () => {
-        setIsModelPage(true);
+        navigate("/contracts");
     }
     return (
 
         <div id="home" className="w-full z-[2] dark:bg-[rgb(22,22,22)] transition-all h-screen">
             <div className="flex justify-center items-center h-full">
-                <div className="w-full mx-auto main-visual flex flex-wrap items-center justify-center">
-                    {isModelPage ? <ModelPage />
-                        :
+                <div className="w-full mx-auto main-visual flex flex-wrap items-center justify-center h-full">
                         <div className="w-full flex flex-row items-center justify-between main-visual">
                             <div className="w-[50%] md:max-w-[50%] ">
                                 <Fade right cascade>
@@ -43,8 +38,6 @@ const HomePage = (props) => {
                             </div>
 
                         </div>
-                    }
-
                 </div>
 
             </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import ContractModel from './contractModel'
+import Header from "./header";
 
 
 
@@ -19,15 +20,12 @@ function ModelPage() {
 
     ];
     return (
-
-        <div className="w-[80%] md:max-w-[80%] flex  flex-col items-center justify-start mt-[70px] max-md:mt-[-100px] max-sm:mt-[-100px] max-sm:p-[10px] ">
-            <div className=' w-[70%] mt-[15px]'>
-                <div class="flex flex-col p-2 m-h-screen">
-
+        <div className="w-full h-screen overflow-y-hidden dark:bg-[rgb(22,22,22)]">
+            <Header />
+            <div className=' w-[100%] dark:bg-[rgb(22,22,22)] fixed top-[100px] flex justify-center items-center'>
+                <div class=" m-h-screen w-[40%]">
                     <div class=" dark:bg-[rgb(36,37,38)] items-center justify-between w-full flex rounded-full shadow-lg p-2 mb-3 sticky" style={{ marginTop: '5px' }}>
-
                         <div>
-
                             <div class="p-2 mr-1 rounded-full hover:bg-white dark:hover:bg-[rgb(75,85,99)] cursor-pointer">
 
                                 <svg class="h-6 w-6 text-gray-500 dark:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -35,7 +33,6 @@ function ModelPage() {
                                 </svg>
 
                             </div>
-
                         </div>
 
                         <input value={value} onChange={({ target: { value } }) => { setValue(value) }} class="font-bold rounded-full w-full py-3 pl-4 text-gray-700 dark:text-white bg-gray-100 dark:bg-[rgb(50,50,50)] leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs" type="text" placeholder="Search" />
@@ -50,30 +47,23 @@ function ModelPage() {
 
                     </div>
                 </div>
+            </div>
+            <div className="w-[100%] h-full dark:bg-[rgb(22,22,22)] z-[2] flex  flex-col items-center justify-center mt-[200px]">
 
+                <div className='w-[70%] dark:bg-[rgb(22,22,22)] overflow-y-scroll flex gap-x-5 gap-y-7 flex-wrap items-center justify-center mb-[200px] py-[50px]'>
+                    {
+                        models.map((model, index) => {
+                            if (model.key.toUpperCase().includes(value.toUpperCase())) {
+                                return model
+                            };
+                        })
+
+                    }
+                </div>
 
             </div>
-            <div className='w-[90%] flex gap-x-5 gap-y-7 flex-wrap items-center justify-center'>
-                {
-                    models.map((model,index)=>{
-                       if(model.key.toUpperCase().includes(value.toUpperCase())) {
-                          return model
-                       } ;
-                    })
-                
-                }
-
-                {/* <ContractModel contractName='Uniswap' imgSrc='./images/uniswaplogo.png' click="handleUniswapModalShow" contractTitle='Uniswap Contract' contractDescription='This is contract for uniswap trade.' />
-                <ContractModel contractName='CurveSwap' imgSrc='./images/curve-dao-token-crv-logo.png' click="handleCurveModalShow" contractTitle='Curve Contract' contractDescription='This is contract for CurveSwap trade.' />
-                <ContractModel contractName='MakerDao' imgSrc='./images/maker-mkr-seeklogo.svg' click="handleMakerDaoModalShow" contractTitle='MakerDao' contractDescription='This is contract for MakerDao Vault Management.' />
-                <ContractModel contractName='Aave' imgSrc='./images/aave-aave-logo.png' click="handleAaveModalShow" contractTitle='Aave Contract' contractDescription='This is contract to Deposite to Aave.' />
-                <ContractModel contractName='SupplyInfo' imgSrc='./images/nimiq-exchange-token-logo-png-transparent.png' click="handleSupplyModalShow" contractTitle='SupplyInfo' contractDescription='You can get the information of Total Supply and Maxium Supply.' />
-                <ContractModel contractName='Transfer' imgSrc='./images/The-Transfer-Token-TTT-Logo-Pngsource-DZKBBFLC.png' click="handleTransferModalShow" contractTitle='Transfer' contractDescription='You can transfer your token and USDT to destination address.' />
-                <ContractModel contractName='Stake' imgSrc='./images/xdai-stake-logo.png' click="handleStakeModalShow" contractTitle='Stake' contractDescription='You can Stake your token and get bonus token every month.' />
-                <ContractModel contractName='Mint' imgSrc='./images/pngwing.com.png' click="handleMintModalShow" contractTitle='Mint' contractDescription='You can mint the token here.' /> */}
-            </div>
-
         </div>
+
     )
 }
 

@@ -3,8 +3,8 @@ import { Route } from "react-router-dom";
 import { Router } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import React from "react";
-import HomePage from "./components/home";
-import Header from "./components/header";
+import FrontPage from "./components/frontPage";
+import ModelPage from "./components/modelPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
@@ -106,10 +106,12 @@ const App = () => {
       <WagmiConfig config={wagmiConfig}>
         <RainbowKitProvider chains={chains} coolMode theme={darkTheme()}>
           <BrowserRouter>
-            <div className=" w-full h-full">
-              <Header />
-              <HomePage />
-            </div>
+            <Routes>
+              <Route>
+                <Route path="/" element={<FrontPage />} />
+                <Route path="contracts" element={<ModelPage />} />
+              </Route>
+            </Routes>
           </BrowserRouter>
         </RainbowKitProvider>
       </WagmiConfig>
