@@ -25,7 +25,7 @@ const HomePage = (props) => {
                                 {
                                     show && (
                                         <Fade right cascade>
-                                            <div className="pt-[50px] w-full flex justify-center items-center flex-col gap-2">
+                                            <div className="pt-[0px] w-full flex justify-center items-center flex-col gap-2">
                                                 <h1 className=" text-[3rem] pb-3 dark:text-white text-center">
                                                     Welcome to the <span className="text-[#ffb4ed] dark:text-[#FFD6F5] hover:animate-pulse duration-500">commune</span>!
                                                 </h1>
@@ -48,7 +48,7 @@ const HomePage = (props) => {
                                 {
                                     show && (
                                         <Fade right cascade>
-                                            <img src="./images/CubesShufflingGIF.gif" className="mt-[0px] max-w-[720px] max-h-[680px]" alt="" />
+                                            <img src="./images/CubesShufflingGIF.gif" className="mt-[0px] max-w-[720px] max-h-[680px] w-[50%]" alt="" />
                                         </Fade>
                                     )
                                 }
