@@ -20,7 +20,7 @@ const HomePage = (props) => {
                     <div className="w-full mx-auto main-visual flex flex-wrap items-start justify-center">
                         {isModelPage ? <ModelPage/>
                            :
-                        <div className="w-full flex flex-row items-center justify-between main-visual mt-[200px]">
+                        <div className="w-full flex flex-row items-center justify-between main-visual mt-[150px]">
                             <div className="w-[50%] md:max-w-[50%] ">
                                 {
                                     show && (
@@ -52,9 +52,6 @@ const HomePage = (props) => {
                                         </Fade>
                                     )
                                 }
-
-
-
                             </div>
 
                         </div>
