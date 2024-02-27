@@ -20,7 +20,7 @@ function ModelPage() {
     ];
     return (
 
-        <div className="w-[80%] md:max-w-[80%] flex  flex-col items-center justify-start mt-[0px] max-md:mt-[-100px] max-sm:mt-[-100px] max-sm:p-[10px] ">
+        <div className="w-[80%] md:max-w-[80%] flex  flex-col items-center justify-start mt-[70px] max-md:mt-[-100px] max-sm:mt-[-100px] max-sm:p-[10px] ">
             <div className=' w-[70%] mt-[15px]'>
                 <div class="flex flex-col p-2 m-h-screen">
 

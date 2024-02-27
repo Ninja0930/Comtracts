@@ -43,7 +43,7 @@ const Header = () => {
   };
 
   return (
-    <div className="relative dark:bg-[rgb(36,37,38)] transition-all py-1 sm:py-2 md:py-3 flex items-center justify-between shadow-md">
+    <div className=" fixed w-full dark:bg-[rgb(36,37,38)] transition-all py-1 sm:py-2 md:py-3 flex items-center justify-between shadow-md">
       <div className="flex items-center justify-between w-full max-w-screen-xl px-4 mx-auto sm:px-6 md:px-8">
         <div className="flex justify-center items-center gap-2">
           <a href='/'>

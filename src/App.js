@@ -5,13 +5,13 @@ import { Routes } from "react-router-dom";
 import React from "react";
 import HomePage from "./components/home";
 import Header from "./components/header";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@rainbow-me/rainbowkit/styles.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@rainbow-me/rainbowkit/styles.css";
 import {
   RainbowKitProvider,
   darkTheme,
-  connectorsForWallets
-} from '@rainbow-me/rainbowkit';
+  connectorsForWallets,
+} from "@rainbow-me/rainbowkit";
 import {
   rainbowWallet,
   walletConnectWallet,
@@ -19,9 +19,9 @@ import {
   coinbaseWallet,
   okxWallet,
   ledgerWallet,
-  metaMaskWallet
-} from '@rainbow-me/rainbowkit/wallets';
-import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
+  metaMaskWallet,
+} from "@rainbow-me/rainbowkit/wallets";
+import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
 import {
   mainnet,
   polygon,
@@ -30,25 +30,22 @@ import {
   base,
   zora,
   goerli,
-} from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
-import ReactAudioPlayer from 'react-audio-player';
+} from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import ReactAudioPlayer from "react-audio-player";
 import { ALCHEMY_API_KEY, PROJECT_ID } from "./utils/env";
 
 const { chains, publicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum, base, zora, sepolia, goerli],
-  [
-    alchemyProvider({ apiKey: ALCHEMY_API_KEY }),
-    publicProvider()
-  ]
+  [alchemyProvider({ apiKey: ALCHEMY_API_KEY }), publicProvider()]
 );
 
 const projectId = PROJECT_ID;
 
 const connectors = connectorsForWallets([
   {
-    groupName: 'Recommended',
+    groupName: "Recommended",
     wallets: [
       metaMaskWallet({ projectId, chains }), // Metamask
       ...(projectId ? [walletConnectWallet({ projectId, chains })] : []),
@@ -59,7 +56,7 @@ const connectors = connectorsForWallets([
     ],
   },
   {
-    groupName: 'Other',
+    groupName: "Other",
     wallets: [
       ...(projectId ? [rainbowWallet({ projectId, chains })] : []),
       ...(projectId ? [coinbaseWallet({ projectId, chains })] : []),
@@ -78,27 +75,26 @@ const connectors = connectorsForWallets([
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient
-})
+  publicClient,
+});
 
 const App = () => {
-
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     const handleLoad = () => {
       setIsLoading(false);
     };
-  
-    window.addEventListener('load', handleLoad);
-  
+
+    window.addEventListener("load", handleLoad);
+
     return () => {
       // Cleanup: Remove the event listener when the component unmounts
-      window.removeEventListener('load', handleLoad);
+      window.removeEventListener("load", handleLoad);
     };
   }, []);
 
-  return  (
+  return (
     <>
       <ReactAudioPlayer
         src="/audio/mix.mp3"
@@ -108,24 +104,17 @@ const App = () => {
       />
 
       <WagmiConfig config={wagmiConfig}>
-
         <RainbowKitProvider chains={chains} coolMode theme={darkTheme()}>
           <BrowserRouter>
-            <Header />
-            <div className="relative bg-white h-max">
-
+            <div className=" w-full h-full">
+              <Header />
               <HomePage />
-
             </div>
-
           </BrowserRouter>
-
         </RainbowKitProvider>
-
       </WagmiConfig>
-
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
