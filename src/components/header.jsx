@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { hover } from "@testing-library/user-event/dist/hover";
 import * as antdModel from "../utils/antdmodal.css";
+import { Space, Modal, Dropdown } from "antd";
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 const Header = () => {
   React.useEffect(() => {
     const smoothScroll = (event) => {
@@ -43,25 +49,100 @@ const Header = () => {
   };
 
   return (
-    <div className=" fixed w-full dark:bg-[rgb(36,37,38)] transition-all py-1 sm:py-2 md:py-3 flex items-center justify-between shadow-md">
+    <div className=" fixed w-full z-[99] bg-[#ffffff] dark:bg-[rgb(36,37,38)] transition-all py-1 sm:py-2 md:py-3 flex items-center justify-between shadow-md">
       <div className="flex items-center justify-between w-full max-w-screen-xl px-4 mx-auto sm:px-6 md:px-8">
         <div className="flex justify-center items-center gap-2">
           <a href='/'>
             <img
               src="/images/svg/commune.svg"
               alt="Logo"
-              className="cursor-pointer h-[140px] sm:h-16 md:h-18"
+              className="cursor-pointer sm:h-[70px] h-[50px]"
             />
           </a>
           <a href='/' className=' no-underline dark:text-white transition-all'><p className=' cursor-pointer text-[24px] font-bold mt-[7px]'>commune</p></a>
         </div>
-        <nav className="flex-wrap gap-5 items-center hidden space-x-4 pc-menu md:flex">
+        <nav className="flex-wrap gap-3 items-center hidden space-x-4 pc-menu md:flex">
           <div className=''>
-            <Switcher />
+            <Switcher size='30' />
           </div>
-          {/* <div
+
+          <div
             style={{ display: "flex", gap: 12 }}
-            className="flex flex-col items-center justify-center"
+            className="flex flex-col items-center justify-center ml-[-2px]"
+          >
+            <ConnectButton.Custom>
+              {({
+                account,
+                chain,
+                openAccountModal,
+                openChainModal,
+                openConnectModal,
+                authenticationStatus,
+                mounted,
+              }) => {
+                // Note: If your app doesn't use authentication, you
+                // can remove all 'authenticationStatus' checks
+                const ready = mounted && authenticationStatus !== 'loading';
+                console.log('------',)
+                const connected =
+                  ready &&
+                  account &&
+                  chain &&
+                  (!authenticationStatus ||
+                    authenticationStatus === 'authenticated');
+
+                return (
+                  <div
+                    {...(!ready && {
+                      'aria-hidden': true,
+                      'style': {
+                        opacity: 0,
+                        pointerEvents: 'none',
+                        userSelect: 'none',
+                      },
+                    })}
+                  >
+                    {(() => {
+                      if (!connected) {
+                        return (
+                          <div className=" flex gap-[7px] justify-center items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
+                              <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
+                            </svg>
+                            <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                              Profile
+                            </button>
+                          </div>
+                        );
+                      }
+
+                      if (chain.unsupported) {
+                        return (
+                          <button onClick={openChainModal} type="button" style={{ boxShadow: 'rgb(0 0 0 / 98%) 3px 3px 3px 3px' }}>
+                            Wrong network
+                          </button>
+                        );
+                      }
+
+                      return (
+                        <div className=" flex gap-[7px] justify-center items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
+                            <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
+                          </svg>
+                          <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                            Profile
+                          </button>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                );
+              }}
+            </ConnectButton.Custom>
+          </div>
+          <div
+            style={{ display: "flex", gap: 12 }}
+            className="flex flex-col items-center justify-center ml-[1px]"
           >
             <ConnectButton.Custom>
               {({
@@ -97,16 +178,12 @@ const Header = () => {
                     {(() => {
                       if (!connected) {
                         return (
-                          // <button onClick={openConnectModal} type="button" className='text-white text-sm sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] px-3 py-2 bg-[#e45744] border border-white no-underline rounded-full hover:bg-[#256fc4] hover:text-white' style={{ fontFamily: 'Smack' }}>
-                          //     Connect Wallet
-                          // </button>
-                          <a onClick={openConnectModal} class="relative no-underline cursor-pointer inline-flex items-center px-6 py-2 overflow-hidden text-lg font-medium text-[rgb(71,98,248)] dark:text-white border-2 border-[rgb(71,98,248)] dark:border-white dark:hover:border-[rgb(22,22,22)] rounded-full hover:text-white group hover:bg-gray-50 dark:hover:bg-[rgb(22,22,22)]">
-                            <span class="absolute left-0 block w-full h-0 transition-all bg-[rgb(71,98,248)] dark:bg-[rgb(22,22,22)] opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
-                            <span class="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-5 ease">
-                              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            </span>
-                            <span class="relative">Connect Wallet</span>
-                          </a>
+                          <div className=" flex gap-[4px] justify-center items-center">
+                            <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M20 12h-13l3 -3m0 6l-3 -3" /></svg>
+                            <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                              SignIn
+                            </button>
+                          </div>
                         );
                       }
 
@@ -119,10 +196,10 @@ const Header = () => {
                       }
 
                       return (
-                        <div style={{ display: 'flex', gap: 12 }} className='flex items-center flex-col justify-center'>
-
-                          <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='text-white text-sm sm:text-base transition-all md:text-[18px] evermore hover:opacity-[0.7] px-3 py-2 bg-[#e45744] border border-white no-underline rounded-full hover:bg-[#256fc4] hover:text-white' style={{ fontFamily: 'Smack' }}>
-                            Buy Now
+                        <div className=" flex gap-[4px] justify-center items-center">
+                          <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
+                          <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                            SignOut
                           </button>
 
                         </div>
@@ -132,44 +209,248 @@ const Header = () => {
                 );
               }}
             </ConnectButton.Custom>
-          </div> */}
+          </div>
         </nav>
 
         <div className="md:hidden sp-menu">
-          <button
-            id="mobile-menu-button"
-            className="p-2 text-white focus:outline-none"
-            onClick={toggleMobileMenu}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-
-          <div
-            id="mobile-menu"
-            className={mobileMenuVisible ? "block" : "hidden"}
-          >
-            <div className="flex justify-center w-full">
-              <a
-                href={"#home"}
-                className="block py-2 text-sm text-white no-underline sm:text-base md:text-lg"
-              >
-                Home
-              </a>
+          {/* <Dropdown className={{antdModel}} menu={{ items }} trigger={['click']}>
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                <button
+                  id="mobile-menu-button"
+                  className="p-2 text-[rgb(22,22,22)] dark:text-white focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              </Space>
+            </a>
+          </Dropdown> */}
+          <Menu as="div" className="relative inline-block text-left z-[99]">
+            <div>
+              <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#f0f0f0] dark:bg-[rgb(36,37,38)] px-3 py-2 text-sm font-semibold text-gray-900 dark:text-[white] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                <button
+                  id="mobile-menu-button"
+                  className="p-2 text-[rgb(22,22,22)] dark:text-white focus:outline-none"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+              </Menu.Button>
             </div>
-          </div>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute z-50 mt-4 right-0 w-[250px] origin-top-right divide-y divide-gray-100 dark:divide-[rgb(22,22,22)] rounded-md bg-[#ffffff] dark:bg-[rgb(36,37,38)] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="p-[40px] flex flex-col justify-start items-start gap-[20px]">
+
+                  <Menu.Item>
+                    <div className=' flex gap-[21px] justify-center items-center'>
+                      <Switcher size='25' />
+                      <span className=" text-[#256fc4] dark:text-white" style={{ fontFamily: 'Smack' }}>
+                        Night Mode
+                      </span>
+                    </div>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <div
+                      style={{ display: "flex", gap: 12 }}
+                      className="flex flex-col items-center justify-center ml-[-2px]"
+                    >
+                      <ConnectButton.Custom>
+                        {({
+                          account,
+                          chain,
+                          openAccountModal,
+                          openChainModal,
+                          openConnectModal,
+                          authenticationStatus,
+                          mounted,
+                        }) => {
+                          // Note: If your app doesn't use authentication, you
+                          // can remove all 'authenticationStatus' checks
+                          const ready = mounted && authenticationStatus !== 'loading';
+                          console.log('------',)
+                          const connected =
+                            ready &&
+                            account &&
+                            chain &&
+                            (!authenticationStatus ||
+                              authenticationStatus === 'authenticated');
+
+                          return (
+                            <div
+                              {...(!ready && {
+                                'aria-hidden': true,
+                                'style': {
+                                  opacity: 0,
+                                  pointerEvents: 'none',
+                                  userSelect: 'none',
+                                },
+                              })}
+                            >
+                              {(() => {
+                                if (!connected) {
+                                  return (
+                                    <div className=" flex gap-[20px] justify-center items-center">
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
+                                        <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
+                                      </svg>
+                                      <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                                        Profile
+                                      </button>
+                                    </div>
+                                  );
+                                }
+
+                                if (chain.unsupported) {
+                                  return (
+                                    <button onClick={openChainModal} type="button" style={{ boxShadow: 'rgb(0 0 0 / 98%) 3px 3px 3px 3px' }}>
+                                      Wrong network
+                                    </button>
+                                  );
+                                }
+
+                                return (
+                                  <div className=" flex gap-[20px] justify-center items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
+                                      <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
+                                    </svg>
+                                    <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                                      Profile
+                                    </button>
+                                  </div>
+                                );
+                              })()}
+                            </div>
+                          );
+                        }}
+                      </ConnectButton.Custom>
+                    </div>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <div
+                      style={{ display: "flex", gap: 12 }}
+                      className="flex flex-col items-center justify-center ml-[1px]"
+                    >
+                      <ConnectButton.Custom>
+                        {({
+                          account,
+                          chain,
+                          openAccountModal,
+                          openChainModal,
+                          openConnectModal,
+                          authenticationStatus,
+                          mounted,
+                        }) => {
+                          // Note: If your app doesn't use authentication, you
+                          // can remove all 'authenticationStatus' checks
+                          const ready = mounted && authenticationStatus !== 'loading';
+                          const connected =
+                            ready &&
+                            account &&
+                            chain &&
+                            (!authenticationStatus ||
+                              authenticationStatus === 'authenticated');
+
+                          return (
+                            <div
+                              {...(!ready && {
+                                'aria-hidden': true,
+                                'style': {
+                                  opacity: 0,
+                                  pointerEvents: 'none',
+                                  userSelect: 'none',
+                                },
+                              })}
+                            >
+                              {(() => {
+                                if (!connected) {
+                                  return (
+                                    <div className=" flex gap-[14px] justify-center items-center">
+                                      <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M20 12h-13l3 -3m0 6l-3 -3" /></svg>
+                                      <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                                        SignIn
+                                      </button>
+                                    </div>
+                                  );
+                                }
+
+                                if (chain.unsupported) {
+                                  return (
+                                    <button onClick={openChainModal} type="button" style={{ boxShadow: 'rgb(0 0 0 / 98%) 3px 3px 3px 3px' }}>
+                                      Wrong network
+                                    </button>
+                                  );
+                                }
+
+                                return (
+                                  <div className=" flex gap-[14px] justify-center items-center">
+                                    <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
+                                    <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                                      SignOut
+                                    </button>
+
+                                  </div>
+                                );
+                              })()}
+                            </div>
+                          );
+                        }}
+                      </ConnectButton.Custom>
+                    </div>
+                  </Menu.Item>
+                </div>
+                {/* <div className="py-1">
+
+                  <Menu.Item>
+                    {({ active }) => (
+                      <a
+                        href="#"
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block px-4 py-2 text-sm'
+                        )}
+                      >
+                        Move
+                      </a>
+                    )}
+                  </Menu.Item>
+                </div> */}
+              </Menu.Items>
+            </Transition>
+          </Menu>
         </div>
       </div>
 

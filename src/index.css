@@ -133,7 +133,7 @@ code {
 @tailwind components;
 @tailwind utilities;
 
-@media(max-width: 995px) {
+@media(max-width: 800px) {
   .pc-menu {
     display: none !important;
   }
