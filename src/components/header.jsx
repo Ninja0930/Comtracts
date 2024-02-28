@@ -196,12 +196,53 @@ const Header = () => {
                       }
 
                       return (
-                        <div className=" flex gap-[4px] justify-center items-center">
-                          <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
+                        <div className=" flex gap-[10px] justify-center items-center">
+                          {/* <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
                           <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
                             SignOut
-                          </button>
+                          </button> */}
+                          <button
+                            class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-gradient-to-tr from-[#ffffff] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)] to-[#dedede] text-[rgb(22,22,22)] dark:text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-1"
+                            type="button" onClick={openChainModal} style={{ fontFamily: 'Smack' }}>
+                            <span>
 
+                              {chain.hasIcon && (
+                                <div
+                                  style={{
+                                    background: chain.iconBackground,
+                                    borderRadius: 999,
+                                    overflow: 'hidden',
+                                    marginRight: 4,
+                                  }}
+                                >
+                                  {chain.iconUrl && (
+                                    <img
+                                      alt={chain.name ?? 'Chain icon'}
+                                      src={chain.iconUrl}
+                                      className=' w-[25px] h-[25px]'
+                                    />
+                                  )}
+                                </div>
+                              )}
+                            </span>
+                            <span className=" text-[15px] first-letter:uppercase lowercase text-[rgb(22,22,22)] dark:text-white">
+                              {chain.name}
+                            </span>
+                            <svg class="h-5 w-5 text-[rgb(22,22,22)] dark:text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="6 9 12 15 18 9" /></svg>
+                          </button>
+                          <button
+                            class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-[10px] px-3 rounded-lg bg-gradient-to-tr from-[#ffffff] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)] to-[#dedede] text-[rgb(22,22,22)] dark:text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-2"
+                            type="button" onClick={openAccountModal} style={{ fontFamily: 'Smack' }}>
+                            <span className=" text-[15px] uppercase text-[rgb(22,22,22)] dark:text-white">
+                              {account.displayBalance
+                                ? account.displayBalance
+                                : ''}
+                            </span>
+                            <span className=" text-[15px] first-letter:uppercase lowercase text-[rgb(22,22,22)] dark:text-white">
+                              {account.displayName}
+                            </span>
+                            <svg class="h-5 w-5 text-[rgb(22,22,22)] dark:text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="6 9 12 15 18 9" /></svg>
+                          </button>
                         </div>
                       );
                     })()}
@@ -416,12 +457,53 @@ const Header = () => {
                                 }
 
                                 return (
-                                  <div className=" flex gap-[14px] justify-center items-center">
-                                    <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
+                                  <div className=" flex flex-col gap-[14px] justify-center items-start">
+                                    {/* <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
                                     <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
                                       SignOut
-                                    </button>
+                                    </button> */}
+                                    <button
+                                      class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-gradient-to-tr from-[#ffffff] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)] to-[#dedede] text-[rgb(22,22,22)] dark:text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-1"
+                                      type="button" onClick={openChainModal} style={{ fontFamily: 'Smack' }}>
+                                      <span>
 
+                                        {chain.hasIcon && (
+                                          <div
+                                            style={{
+                                              background: chain.iconBackground,
+                                              borderRadius: 999,
+                                              overflow: 'hidden',
+                                              marginRight: 4,
+                                            }}
+                                          >
+                                            {chain.iconUrl && (
+                                              <img
+                                                alt={chain.name ?? 'Chain icon'}
+                                                src={chain.iconUrl}
+                                                className=' w-[25px] h-[25px]'
+                                              />
+                                            )}
+                                          </div>
+                                        )}
+                                      </span>
+                                      <span className=" text-[15px] first-letter:uppercase lowercase text-[rgb(22,22,22)] dark:text-white">
+                                        {chain.name}
+                                      </span>
+                                      <svg class="h-5 w-5 text-[rgb(22,22,22)] dark:text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
+                                    <button
+                                      class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-[10px] px-3 rounded-lg bg-gradient-to-tr from-[#ffffff] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)] to-[#dedede] text-[rgb(22,22,22)] dark:text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-2"
+                                      type="button" onClick={openAccountModal} style={{ fontFamily: 'Smack' }}>
+                                      <span className=" text-[15px] uppercase text-[rgb(22,22,22)] dark:text-white">
+                                        {account.displayBalance
+                                          ? account.displayBalance
+                                          : ''}
+                                      </span>
+                                      <span className=" text-[15px] first-letter:uppercase lowercase text-[rgb(22,22,22)] dark:text-white">
+                                        {account.displayName}
+                                      </span>
+                                      <svg class="h-5 w-5 text-[rgb(22,22,22)] dark:text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="6 9 12 15 18 9" /></svg>
+                                    </button>
                                   </div>
                                 );
                               })()}
