@@ -5,6 +5,7 @@ import { Routes } from "react-router-dom";
 import React from "react";
 import FrontPage from "./components/frontPage";
 import ModelPage from "./components/modelPage";
+import ProfilePage from "./components/profilePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
@@ -110,6 +111,7 @@ const App = () => {
               <Route>
                 <Route path="/" element={<FrontPage />} />
                 <Route path="contracts" element={<ModelPage />} />
+                <Route path="profile" element={<ProfilePage />} />
               </Route>
             </Routes>
           </BrowserRouter>

@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+*{
+  box-sizing: border-box;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -27,6 +29,10 @@
 .App-link {
   color: #61dafb;
 }
+
+/* .profile_banner:hover .profile_banner_edit_but{
+   opacity: 1;
+} */
 
 @keyframes App-logo-spin {
   from {

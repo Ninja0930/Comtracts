@@ -7,10 +7,15 @@ import * as antdModel from "../utils/antdmodal.css";
 import { Space, Modal, Dropdown } from "antd";
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
+import ProfilePage from "./profilePage";
+import { useNavigate } from "react-router-dom";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 const Header = () => {
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     const smoothScroll = (event) => {
       event.preventDefault();
@@ -23,7 +28,7 @@ const Header = () => {
         });
       }
     };
-
+    
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
     anchorLinks.forEach((link) => {
       link.addEventListener("click", smoothScroll);
@@ -44,10 +49,10 @@ const Header = () => {
     setMobileMenuVisible(!mobileMenuVisible);
   };
 
-  const handleBuyButton = () => {
-    setSelectedCurrency();
+  const openProfilePage = () => {
+    navigate("/profile");
   };
-
+  
   return (
     <div className=" fixed w-full z-[99] bg-[#ffffff] dark:bg-[rgb(36,37,38)] transition-all py-1 sm:py-2 md:py-3 flex items-center justify-between shadow-md">
       <div className="flex items-center justify-between w-full max-w-screen-xl px-4 mx-auto sm:px-6 md:px-8">
@@ -64,81 +69,6 @@ const Header = () => {
         <nav className="flex-wrap gap-3 items-center hidden space-x-4 pc-menu md:flex">
           <div className=''>
             <Switcher size='30' />
-          </div>
-
-          <div
-            style={{ display: "flex", gap: 12 }}
-            className="flex flex-col items-center justify-center ml-[-2px]"
-          >
-            <ConnectButton.Custom>
-              {({
-                account,
-                chain,
-                openAccountModal,
-                openChainModal,
-                openConnectModal,
-                authenticationStatus,
-                mounted,
-              }) => {
-                // Note: If your app doesn't use authentication, you
-                // can remove all 'authenticationStatus' checks
-                const ready = mounted && authenticationStatus !== 'loading';
-                console.log('------',)
-                const connected =
-                  ready &&
-                  account &&
-                  chain &&
-                  (!authenticationStatus ||
-                    authenticationStatus === 'authenticated');
-
-                return (
-                  <div
-                    {...(!ready && {
-                      'aria-hidden': true,
-                      'style': {
-                        opacity: 0,
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                      },
-                    })}
-                  >
-                    {(() => {
-                      if (!connected) {
-                        return (
-                          <div className=" flex gap-[7px] justify-center items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
-                              <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
-                            </svg>
-                            <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
-                              Profile
-                            </button>
-                          </div>
-                        );
-                      }
-
-                      if (chain.unsupported) {
-                        return (
-                          <button onClick={openChainModal} type="button" style={{ boxShadow: 'rgb(0 0 0 / 98%) 3px 3px 3px 3px' }}>
-                            Wrong network
-                          </button>
-                        );
-                      }
-
-                      return (
-                        <div className=" flex gap-[7px] justify-center items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
-                            <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
-                          </svg>
-                          <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
-                            Profile
-                          </button>
-                        </div>
-                      );
-                    })()}
-                  </div>
-                );
-              }}
-            </ConnectButton.Custom>
           </div>
           <div
             style={{ display: "flex", gap: 12 }}
@@ -196,11 +126,19 @@ const Header = () => {
                       }
 
                       return (
-                        <div className=" flex gap-[10px] justify-center items-center">
+                        <div className=" flex gap-[15px] justify-center items-center">
                           {/* <svg class="h-8 w-8 text-[#256fc4] dark:text-[white]" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />  <path d="M7 12h14l-3 -3m0 6l3 -3" /></svg>
                           <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
                             SignOut
                           </button> */}
+                          <div className=" flex gap-[7px] justify-center items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
+                              <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
+                            </svg>
+                            <button onClick={openProfilePage} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                              Profile
+                            </button>
+                          </div>
                           <button
                             class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-gradient-to-tr from-[#ffffff] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)] to-[#dedede] text-[rgb(22,22,22)] dark:text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-1"
                             type="button" onClick={openChainModal} style={{ fontFamily: 'Smack' }}>
@@ -327,82 +265,6 @@ const Header = () => {
                   <Menu.Item>
                     <div
                       style={{ display: "flex", gap: 12 }}
-                      className="flex flex-col items-center justify-center ml-[-2px]"
-                    >
-                      <ConnectButton.Custom>
-                        {({
-                          account,
-                          chain,
-                          openAccountModal,
-                          openChainModal,
-                          openConnectModal,
-                          authenticationStatus,
-                          mounted,
-                        }) => {
-                          // Note: If your app doesn't use authentication, you
-                          // can remove all 'authenticationStatus' checks
-                          const ready = mounted && authenticationStatus !== 'loading';
-                          console.log('------',)
-                          const connected =
-                            ready &&
-                            account &&
-                            chain &&
-                            (!authenticationStatus ||
-                              authenticationStatus === 'authenticated');
-
-                          return (
-                            <div
-                              {...(!ready && {
-                                'aria-hidden': true,
-                                'style': {
-                                  opacity: 0,
-                                  pointerEvents: 'none',
-                                  userSelect: 'none',
-                                },
-                              })}
-                            >
-                              {(() => {
-                                if (!connected) {
-                                  return (
-                                    <div className=" flex gap-[20px] justify-center items-center">
-                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
-                                        <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
-                                      </svg>
-                                      <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
-                                        Profile
-                                      </button>
-                                    </div>
-                                  );
-                                }
-
-                                if (chain.unsupported) {
-                                  return (
-                                    <button onClick={openChainModal} type="button" style={{ boxShadow: 'rgb(0 0 0 / 98%) 3px 3px 3px 3px' }}>
-                                      Wrong network
-                                    </button>
-                                  );
-                                }
-
-                                return (
-                                  <div className=" flex gap-[20px] justify-center items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
-                                      <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
-                                    </svg>
-                                    <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
-                                      Profile
-                                    </button>
-                                  </div>
-                                );
-                              })()}
-                            </div>
-                          );
-                        }}
-                      </ConnectButton.Custom>
-                    </div>
-                  </Menu.Item>
-                  <Menu.Item>
-                    <div
-                      style={{ display: "flex", gap: 12 }}
                       className="flex flex-col items-center justify-center ml-[1px]"
                     >
                       <ConnectButton.Custom>
@@ -462,6 +324,14 @@ const Header = () => {
                                     <button onClick={() => handleBuyButton(account.address, selectedCurrency)} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
                                       SignOut
                                     </button> */}
+                                    <div className=" flex gap-[17px] justify-center items-center">
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-7 w-7 text-[#256fc4] dark:text-[white]">
+                                        <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-5-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM8 9c-1.825 0-3.422.977-4.295 2.437A5.49 5.49 0 0 0 8 13.5a5.49 5.49 0 0 0 4.294-2.063A4.997 4.997 0 0 0 8 9Z" clip-rule="evenodd" />
+                                      </svg>
+                                      <button onClick={openConnectModal} type="button" className='dark:text-white text-[#256fc4] text-[18px] sm:text-base md:text-[18px] transition-all evermore hover:opacity-[0.7] no-underline rounded-full dark:hover:text-white hover:text-blue-800' style={{ fontFamily: 'Smack' }}>
+                                        Profile
+                                      </button>
+                                    </div>
                                     <button
                                       class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-gradient-to-tr from-[#ffffff] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)] to-[#dedede] text-[rgb(22,22,22)] dark:text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85] flex items-center gap-1"
                                       type="button" onClick={openChainModal} style={{ fontFamily: 'Smack' }}>
