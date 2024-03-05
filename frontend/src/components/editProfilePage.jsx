@@ -21,7 +21,7 @@ import {
 const EditProfilePage = () => {
 
     const { useState } = React;
-    const [avatarFile, setAvatarFile] = useState('./images/12.png');
+    const [avatarFile, setAvatarFile] = useState("./images/12.png");
     const [bannerFile, setBannerFile] = useState("");
     const handleAvatarFile = (e) => {
         console.log(e.target.files);
@@ -59,9 +59,9 @@ const EditProfilePage = () => {
                         </List>
                     </Card>
                 </div>
-                <div className='flex justify-start items-start w-[100%] overflow-y-visible flex-col px-[100px] lg:w-[80%]' style={{ fontFamily: 'Smack' }}>
-                    <div className=' flex justify-start items-start text-[rgb(18,18,18)] w-full dark:text-white text-[30px] mt-[30px] lg:mt-[-30px]'>Profile details</div>
-                    <div className='flex justify-start items-start mt-[50px] w-full md:gap-[100px] gap-[50px] md:flex-row flex-col'>
+                <div className='flex justify-start items-start w-[100%] overflow-y-visible flex-col px-[10px] sm:px-[100px] lg:w-[80%]' style={{ fontFamily: 'Smack' }}>
+                    <div className=' flex justify-center items-center  md:justify-start md:items-start text-[rgb(18,18,18)] w-full dark:text-white text-[30px] mt-[30px] lg:mt-[-30px]'>Profile details</div>
+                    <div className='flex justify-center items-center  md:justify-start md:items-start mt-[50px] w-full md:gap-[100px] gap-[50px] md:flex-row flex-col'>
                         <div className='flex justify-start items-start flex-col'>
                             <div className='flex justify-start w-full items-start flex-col'>
                                 <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Username</label>
@@ -90,8 +90,9 @@ const EditProfilePage = () => {
                                 <div className=' mt-[20px] w-full'>
                                     <div className='justify-center flex group items-center h-[10rem] w-[10rem] overflow-y-hidden bg-[#e1e1e1] hover:bg-[#cbcbcb] transition-all dark:bg-[rgb(30,30,30)] dark:hover:bg-[rgb(33,33,33)] cursor-pointer dark:border-[rgb(18,18,18)] border-[#ffffff] border-[5px] rounded-[50%]'>
                                         {avatarFile ?
-                                            <span className='w-full h-full flex bg-contain bg-no-repeat bg-center overflow-y-hidden'>
+                                            <span className='w-full h-full flex overflow-y-hidden'>
                                                 <img className='w-full' src={avatarFile} alt="" />
+                                                {/* <img className='w-full' src='./images/12.png' alt="" /> */}
                                             </span>
                                             : <span className='w-full h-full'>
                                                 {/* <img className=' w-full h-full' src='' alt="" /> */}
@@ -133,7 +134,7 @@ const EditProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className=' flex justify-start items-center w-full'>
+                    <div className=' flex justify-center items-center  md:justify-start md:items-start w-full'>
                         <a onClick={() => console.log('1')} style={{ fontFamily: 'Might', width: '100px', fontSize: '18px', transition: '0.1s' }} className="relative rounded-[15px] mt-[30px] mb-[40px] cursor-pointer group font-medium no-underline flex p-2 text-white items-center justify-center content-center focus:outline-none">
                             <span className="absolute top-0 left-0 w-full h-full rounded-[15px] opacity-50 filter blur-sm bg-gradient-to-br from-[#256fc4] to-[#256fc4]"  ></span>
                             <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-[#256fc4] to-[#256fc4]"></span>
