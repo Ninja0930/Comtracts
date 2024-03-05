@@ -176,7 +176,7 @@ code {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(36,37,38);
+  background: rgb(27,27,27);
   border-radius: 5px;
 }
 

@@ -10,7 +10,7 @@ function MobileMenu() {
         setSelectedCurrency();
     };
     return (
-        <div id="mobile-menu" className=' w-[150px] h-[150px] mt-[-90px] bg-[#ffffff] dark:bg-[rgb(36,37,38)] transition-all px-[10px] buy-usdt flex flex-col items-center justify-center gap-[1.5rem] border-gray-500 rounded-[1rem] shadow-2xl' style={{ boxShadow: 'rgba(0, 0, 0, 0.5) 0px 3px 8px 0px' }}>
+        <div id="mobile-menu" className=' w-[150px] h-[150px] mt-[-90px] bg-[#ffffff] dark:bg-[rgb(27,27,27)] transition-all px-[10px] buy-usdt flex flex-col items-center justify-center gap-[1.5rem] border-gray-500 rounded-[1rem] shadow-2xl' style={{ boxShadow: 'rgba(0, 0, 0, 0.5) 0px 3px 8px 0px' }}>
             <div className=''>
                 <Switcher size='25' />
             </div>

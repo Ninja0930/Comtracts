@@ -63,15 +63,15 @@ function AaveModal() {
     }, [buyTokens, buyWithUSDT, approve, value])
 
     return (
-        <div className=' ml-[-300px] bg-[#ffffff] dark:bg-[rgb(36,37,38)] transition-all px-[20px] buy-usdt flex flex-col items-center justify-center border-gray-500 rounded-[1rem] shadow-2xl w-[550px]' style={{ boxShadow: 'rgba(0, 0, 0, 0.5) 0px 3px 8px 0px' }}>
-            <div className='bg-[#fff] dark:bg-[rgb(36,37,38)] transition-all flex flex-col items-center rounded-t-[1rem] w-full mt-3'>
+        <div className=' ml-[-300px] bg-[#ffffff] dark:bg-[rgb(27,27,27)] transition-all px-[20px] buy-usdt flex flex-col items-center justify-center border-gray-500 rounded-[1rem] shadow-2xl w-[550px]' style={{ boxShadow: 'rgba(0, 0, 0, 0.5) 0px 3px 8px 0px' }}>
+            <div className='bg-[#fff] dark:bg-[rgb(27,27,27)] transition-all flex flex-col items-center rounded-t-[1rem] w-full mt-3'>
                 <div className='flex flex-col items-center justify-center px-8 py-2'>
                     <span className='flex dark:text-white transition-all' style={{ fontFamily: 'Might', fontWeight: '700', fontSize: '22px' }}>Aave Contract</span>
                 </div>
             </div>
-            <div className='flex bg-[#fff] dark:bg-[rgb(36,37,38)] flex-col w-full mt-3'>
+            <div className='flex bg-[#fff] dark:bg-[rgb(27,27,27)] flex-col w-full mt-3'>
 
-                <div className='flex bg-[#fff] dark:bg-[rgb(36,37,38)] px-6 items-center justify-between w-full mt-[0px]'>
+                <div className='flex bg-[#fff] dark:bg-[rgb(27,27,27)] px-6 items-center justify-between w-full mt-[0px]'>
                     <span className=' dark:text-white' style={{ fontFamily: 'Might' }}>
                         Deposit to Aave
                     </span>
@@ -109,14 +109,14 @@ function AaveModal() {
                         </div>
                     </div>
                     <div className='flex flex-col items-center justify-center mb-4 w-[70%] mt-[22px]'>
-                        {/* <button onClick={() => console.log('1')} type="button" style={{ fontFamily: 'Might', fontSize: '18px' }} className="flex p-2 bg-[#256fc4] dark:bg-[rgb(22,22,22)] text-white items-center justify-center focus:outline-none rounded-[0.5rem] w-full hover:bg-[#6db1ff]">
+                        {/* <button onClick={() => console.log('1')} type="button" style={{ fontFamily: 'Might', fontSize: '18px' }} className="flex p-2 bg-[#256fc4] dark:bg-[rgb(18,18,18)] text-white items-center justify-center focus:outline-none rounded-[0.5rem] w-full hover:bg-[#6db1ff]">
                                                     Stake Now
                                                 </button> */}
                         <a onClick={() => console.log('1')} style={{ fontFamily: 'Might', width: '100%', fontSize: '20px', transition: '0.1s' }} class="relative rounded-[0.5rem] cursor-pointer group font-medium no-underline flex p-2 text-white items-center justify-center content-center focus:outline-none">
-                            <span class="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-[#256fc4] to-[#256fc4] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)]"  ></span>
-                            <span class="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-[#256fc4] to-[#256fc4] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)]"></span>
-                            <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#256fc4] to-[#256fc4] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)]"></span>
-                            <span class="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-[#256fc4] from-[#256fc4] dark:from-[rgb(22,22,22)] dark:to-[rgb(22,22,22)]"></span>
+                            <span class="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-[#256fc4] to-[#256fc4] dark:from-[rgb(18,18,18)] dark:to-[rgb(18,18,18)]"  ></span>
+                            <span class="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-[#256fc4] to-[#256fc4] dark:from-[rgb(18,18,18)] dark:to-[rgb(18,18,18)]"></span>
+                            <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#256fc4] to-[#256fc4] dark:from-[rgb(18,18,18)] dark:to-[rgb(18,18,18)]"></span>
+                            <span class="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-[#256fc4] from-[#256fc4] dark:from-[rgb(18,18,18)] dark:to-[rgb(18,18,18)]"></span>
                             <span class="relative">Deposit Now</span>
                         </a>
                     </div>
