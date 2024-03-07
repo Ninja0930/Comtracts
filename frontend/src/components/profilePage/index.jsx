@@ -1,34 +1,40 @@
 import React from 'react'
-import Header from "./header";
+import Header from "../header";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUser, getUser } from "../../redux/actions/usersAction";
 
 function ProfilePage() {
     const { useState } = React;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { isLoading, user, isLoadingPost } = useSelector((state) => state.users);
 
     const [bannerFile, setBannerFile] = useState();
     const [userName, setUserName] = useState('unnamed');
     const [email, setEmail] = useState('fam@gmail.com');
     const [bio, setBio] = useState('Your bio here.');
     const [avatarFile, setAvatarFile] = useState("./images/12.png");
-    const [message, setMessage] = useState();
-    const handleBannerFile = (e) => {
-        console.log(e.target.files);
-        setBannerFile(URL.createObjectURL(e.target.files[0]));
-        // setMessage("");
-        // const fileType = file['type'];
-        // const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
-        // if (validImageTypes.includes(fileType)) {
-        //     setFile(URL.createObjectURL(e.target.files[0]));
-        // } else {
-        //     setMessage("only images accepted");
-        //     alert({message});
-        // }
+    const [link, setLink] = useState();
 
+    useEffect(() => {
+        dispatch(getUser);
+        if (user) {
+            setAvatarFile(user.user.avatarFile)
+            setBannerFile(user.user.bannerFile)
+            setUserName(user.user.username)
+            setEmail(user.user.email)
+            setLink(user.user.link)
+            setBio(user.user.bio)
+        }
+    }, [dispatch, isLoadingPost]);
+
+    const handleBannerFile = (e) => {
+        setBannerFile(URL.createObjectURL(e.target.files[0]));
     };
     const handleAvatarFile = (e) => {
-        console.log(e.target.files);
         setAvatarFile(URL.createObjectURL(e.target.files[0]));
     };
     const editProfilePageOpen = (e) => {
@@ -128,7 +134,6 @@ function ProfilePage() {
                                                         </button>
                                                     );
                                                 }
-
                                                 return (
                                                     <div className=" flex flex-col gap-[15px] justify-center items-start">
                                                         <div

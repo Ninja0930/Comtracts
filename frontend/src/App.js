@@ -6,7 +6,7 @@ import React from "react";
 import FrontPage from "./components/frontPage";
 import ModelPage from "./components/modelPage";
 import ProfilePage from "./components/profilePage";
-import EditProfilePage from "./components/editProfilePage"
+import EditProfilePage from "./components/profilePage/editProfilePage"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import {

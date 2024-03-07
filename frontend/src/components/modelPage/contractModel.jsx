@@ -1,14 +1,14 @@
 import React from 'react'
-import ModalPan from './modal';
-import SupplyModal from './supplyModal';
-import TransferModal from './transfer';
-import StakingModal from './StakingModal';
-import MintModal from './mintModal';
-import UniswapModal from './uniswapModal';
-import CurveModal from './curveModal';
-import MakerDaoModal from './MakerDaoModal';
-import AaveModal from './AaveModal';
-import * as antdModel from "../utils/antdmodal.css";
+import ModalPan from '../contractModel/modal';
+import SupplyModal from '../contractModel/supplyModal';
+import TransferModal from '../contractModel/transfer';
+import StakingModal from '../contractModel/StakingModal';
+import MintModal from '../contractModel/mintModal';
+import UniswapModal from '../contractModel/uniswapModal';
+import CurveModal from '../contractModel/curveModal';
+import MakerDaoModal from '../contractModel/MakerDaoModal';
+import AaveModal from '../contractModel/AaveModal';
+import * as antdModel from "../../utils/antdmodal.css";
 import { Input, Modal, Button } from "antd";
 
 function ContractModel(props) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import ContractModel from './contractModel'
-import Header from "./header";
+import Header from "../header";
 
 
 

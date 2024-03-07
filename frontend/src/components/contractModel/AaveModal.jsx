@@ -1,10 +1,10 @@
 import React from 'react'
-import CurrencyItem from './CurrencyItem';
+import CurrencyItem from '../CurrencyItem';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useContractRead, useContractWrite } from 'wagmi';
-import { PRESALE_CONTRACT_ADDRESS, USDT_CONTRACT_ADDRESS } from '../utils/env';
-import * as  presaleContractABI from '../token_presale_abi.json';
-import * as  erc20ContractABI from '../token_abi.json';
+import { PRESALE_CONTRACT_ADDRESS, USDT_CONTRACT_ADDRESS } from '../../utils/env';
+import * as  presaleContractABI from '../../token_presale_abi.json';
+import * as  erc20ContractABI from '../../token_abi.json';
 import { useCallback } from 'react';
 import { parseEther } from 'viem';
 function AaveModal() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './header'
+import Header from '../header'
 import {
     Card,
     Typography,
@@ -9,31 +9,59 @@ import {
     ListItemSuffix,
     Chip,
 } from "@material-tailwind/react";
-import {
-    PresentationChartBarIcon,
-    ShoppingBagIcon,
-    UserCircleIcon,
-    Cog6ToothIcon,
-    InboxIcon,
-    PowerIcon,
-} from "@heroicons/react/24/solid";
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUser, getUser } from "../../redux/actions/usersAction";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useNavigate } from 'react-router-dom';
 const EditProfilePage = () => {
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { useState } = React;
-    const [avatarFile, setAvatarFile] = useState("./images/12.png");
+    const { isLoading, user, isLoadingPost } = useSelector((state) => state.users);
+    const [avatarFile, setAvatarFile] = useState("");
     const [bannerFile, setBannerFile] = useState("");
+    const [username, setUsername] = useState("");
+    const [bio, setBio] = useState("");
+    const [email, setEmail] = useState("");
+    const [link, setLink] = useState("");
+    const [pubkey, setPubkey] = useState("");
+
+    useEffect(() => {
+        dispatch(getUser);
+        if (user) {
+            setAvatarFile(user.user.avatarFile)
+            setBannerFile(user.user.bannerFile)
+            setUsername(user.user.username)
+            setEmail(user.user.email)
+            setLink(user.user.link)
+            setBio(user.user.bio)
+        }
+    }, [dispatch, isLoadingPost]);
+
+    const saveProfile = () => {
+        if (avatarFile || bannerFile || username || bio || email || link) {
+            const data = {
+                username: username,
+                bio: bio,
+                email: email,
+                link: link,
+                pubkey: pubkey,
+                avatarFile: avatarFile,
+                bannerFile: bannerFile,
+            }
+            dispatch(createUser(data));
+        }
+    }
+
     const handleAvatarFile = (e) => {
-        console.log(e.target.files);
         setAvatarFile(URL.createObjectURL(e.target.files[0]));
-        console.log(avatarFile);
     };
 
     const handleBannerFile = (e) => {
-        console.log(e.target.files);
         setBannerFile(URL.createObjectURL(e.target.files[0]));
-        console.log(bannerFile);
     };
+
 
     return (
         <div className="w-full overflow-y-hidden dark:bg-[rgb(18,18,18)]" >
@@ -65,23 +93,85 @@ const EditProfilePage = () => {
                         <div className='flex justify-start items-start flex-col'>
                             <div className='flex justify-start w-full items-start flex-col'>
                                 <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Username</label>
-                                <input type="text" className="py-2 px-3 block w-[350px] border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Enter username" />
+                                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="py-2 px-3 block w-[350px] border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Enter username" />
                             </div>
                             <div className='flex justify-center items-start w-full flex-col mt-[40px]'>
                                 <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Bio</label>
-                                <textarea type="text" className="py-2 px-3 w-[350px] h-[100px] block border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Tell the world your story!" />
+                                <textarea type="text" value={bio} onChange={(e) => setBio(e.target.value)} className="py-2 px-3 w-[350px] h-[100px] block border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Tell the world your story!" />
                             </div>
                             <div className='flex justify-start w-full items-start flex-col mt-[40px]'>
                                 <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Email Address</label>
-                                <input type="text" className="py-2 px-3 block w-[350px] border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Enter email" />
+                                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="py-2 px-3 block w-[350px] border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Enter email" />
                             </div>
                             <div className='flex justify-start w-full items-start flex-col mt-[40px]'>
                                 <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Links</label>
-                                <input type="text" className="py-2 px-3 block w-[350px] border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Your website.io" />
+                                <input type="text" value={link} onChange={(e) => setLink(e.target.value)} className="py-2 px-3 block w-[350px] border-[1px] font-thin border-solid outline-none border-gray-300 rounded-lg text-[17px] focus:border-gray-500 dark:focus:border-[#4f4f4f] disabled:opacity-50 disabled:pointer-events-none bg-none dark:bg-[rgb(18,18,18)] dark:border-[#303030] dark:text-gray-200 dark:placeholder:text-[#a7a7a7]" placeholder="Your website.io" />
                             </div>
                             <div className='flex justify-start w-full items-start flex-col mt-[40px]'>
                                 <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Wallet Address</label>
-                                <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">Wallet Address</label>
+                                <label className="block w-full text-[17px] font-medium mb-2 dark:text-white text-start">
+                                    <ConnectButton.Custom>
+                                        {({
+                                            account,
+                                            chain,
+                                            openAccountModal,
+                                            openChainModal,
+                                            openConnectModal,
+                                            authenticationStatus,
+                                            mounted,
+                                        }) => {
+                                            // Note: If your app doesn't use authentication, you
+                                            // can remove all 'authenticationStatus' checks
+                                            const ready = mounted && authenticationStatus !== 'loading';
+                                            const connected =
+                                                ready &&
+                                                account &&
+                                                chain &&
+                                                (!authenticationStatus ||
+                                                    authenticationStatus === 'authenticated');
+
+                                            return (
+                                                <div
+                                                    {...(!ready && {
+                                                        'aria-hidden': true,
+                                                        'style': {
+                                                            opacity: 0,
+                                                            pointerEvents: 'none',
+                                                            userSelect: 'none',
+                                                        },
+                                                    })}
+                                                >
+                                                    {(() => {
+                                                        if (!connected) {
+                                                            navigate('/');
+                                                            return (
+                                                                <div className=" flex gap-[4px] justify-center items-center">
+                                                                    unconnected
+                                                                </div>
+                                                            );
+                                                        }
+
+                                                        if (chain.unsupported) {
+                                                            return (
+                                                                <button onClick={openChainModal} style={{ boxShadow: 'rgb(0 0 0 / 98%) 3px 3px 3px 3px' }}>
+                                                                    Wrong network
+                                                                </button>
+                                                            );
+                                                        }
+                                                        if (connected) {
+                                                            setPubkey(account.displayName);
+                                                        }
+                                                        return (
+                                                            <div className=" flex justify-start items-center">
+                                                                {account.displayName}
+                                                            </div>
+                                                        );
+                                                    })()}
+                                                </div>
+                                            );
+                                        }}
+                                    </ConnectButton.Custom>
+                                </label>
                             </div>
                         </div>
                         <div className='flex justify-center items-center flex-col'>
@@ -134,14 +224,14 @@ const EditProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className=' flex justify-center items-center  md:justify-start md:items-start w-full'>
-                        <a onClick={() => console.log('1')} style={{ fontFamily: 'Might', width: '100px', fontSize: '18px', transition: '0.1s' }} className="relative rounded-[15px] mt-[30px] mb-[40px] cursor-pointer group font-medium no-underline flex p-2 text-white items-center justify-center content-center focus:outline-none">
+                    <div className=' flex justify-center items-center  md:justify-start md:items-start w-full mt-[30px] mb-[40px]'>
+                        <div onClick={saveProfile} style={{ fontFamily: 'Might', width: '100px', fontSize: '18px', transition: '0.1s' }} className="relative rounded-[15px]  cursor-pointer group font-medium no-underline flex p-2 text-white items-center justify-center content-center focus:outline-none">
                             <span className="absolute top-0 left-0 w-full h-full rounded-[15px] opacity-50 filter blur-sm bg-gradient-to-br from-[#256fc4] to-[#256fc4]"  ></span>
                             <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-[#256fc4] to-[#256fc4]"></span>
                             <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0 group-hover:blur-sm from-[#256fc4] to-[#256fc4]"></span>
                             <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-[#256fc4] from-[#256fc4]"></span>
                             <span className="relative">Save</span>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
